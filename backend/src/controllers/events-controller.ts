@@ -14,10 +14,10 @@ class GetEventsController{
 
 class CreateEventsController{
     async handle(request: FastifyRequest, reply: FastifyReply){
-        const { name, description, startTime, endTime, status } = request.body as EventsType
+        const { name, description, startTime, endTime, numberOfDays, status } = request.body as EventsType
 
         const eventsService = new CreateEventsService();
-        const events = await eventsService.execute({ name, description, startTime, endTime, status } as EventsType);
+        const events = await eventsService.execute({ name, description, startTime, endTime, numberOfDays, status } as EventsType);
         reply.send(events)
     }
 }
@@ -36,7 +36,7 @@ class UpdateEventsController{
 
 class DeleteEventsController{
     async handle(request: FastifyRequest, reply: FastifyReply){
-        const { id } = request.body as EventsId
+        const { id } = request.params as EventsId
 
         const deleteEvent = new DeleteEventsService();
         const eventDelete = await deleteEvent.execute({ id });

@@ -1,7 +1,7 @@
 type EventsType = {
     name: string
     description: string
-    numberOfDays: string
+    numberOfDays: number
     startTime: string
     endTime: string
     status: boolean

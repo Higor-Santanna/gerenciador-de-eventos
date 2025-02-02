@@ -13,16 +13,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Eventes {
+model Events {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String
   description String
-  numberOfDays String
+  numberOfDays Int?
   startTime String
   endTime String
   status Boolean
 
-  @@map("Eventes")
+  @@map("Events")
 }
 
 model Users {

@@ -18,13 +18,13 @@ class CreateEventsService{
             data: {
                 name,
                 description,
-                numberOfDays,
+                numberOfDays: numberOfDays !== undefined ? Number(numberOfDays) : null,
                 startTime,
                 endTime,
                 status: true
             }
         });
-
+        
         return event
     }
 }
