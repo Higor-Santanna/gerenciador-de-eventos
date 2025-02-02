@@ -1,10 +1,9 @@
 import prismaClient from "../prisma";
-import { EventsType, EventsDelete} from "../types/types";
+import { EventsType, EventsId} from "../types/types";
 
 class GetEventsService{
     async execute(){
         const getEvents = await prismaClient.events.findMany();
-
         return getEvents;
     }
 }
@@ -31,11 +30,30 @@ class CreateEventsService{
 }
 
 class UpdateEventsService{
-    
+    async execute({ id }: EventsId, data: Partial<EventsType>) {
+        if (!id) {
+            throw new Error("ID do evento é obrigatório");
+        }
+
+        const eventExists = await prismaClient.events.findUnique({
+            where: { id }
+        });
+
+        if (!eventExists) {
+            throw new Error("Evento não encontrado");
+        }
+
+        const updatedEvent = await prismaClient.events.update({
+            where: { id },
+            data
+        });
+
+        return updatedEvent;
+    }
 }
 
 class DeleteEventsService{
-    async execute({ id }: EventsDelete){
+    async execute({ id }: EventsId){
         if(!id){
             throw new Error("Solicitação invalida")
         };
@@ -58,4 +76,4 @@ class DeleteEventsService{
     };
 }
 
-export { CreateEventsService, GetEventsService, DeleteEventsService }
+export { CreateEventsService, GetEventsService, DeleteEventsService, UpdateEventsService }

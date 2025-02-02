@@ -1,6 +1,6 @@
 import { FastifyRequest,  FastifyReply } from "fastify";
-import { CreateEventsService, GetEventsService, DeleteEventsService } from "../services/events-service";
-import { EventsType, EventsDelete } from "../types/types";
+import { CreateEventsService, GetEventsService, DeleteEventsService, UpdateEventsService } from "../services/events-service";
+import { EventsType, EventsId } from "../types/types";
 
 class GetEventsController{
     async handle(request: FastifyRequest, reply: FastifyReply){
@@ -23,12 +23,20 @@ class CreateEventsController{
 }
 
 class UpdateEventsController{
-    
+    async handle(request: FastifyRequest, reply: FastifyReply) {
+        const { id } = request.params as EventsId;
+        const data = request.body as Partial<EventsType>;
+
+        const updateEventService = new UpdateEventsService();
+        const updatedEvent = await updateEventService.execute({id}, data);
+
+        reply.send(updatedEvent);
+    }
 }
 
 class DeleteEventsController{
     async handle(request: FastifyRequest, reply: FastifyReply){
-        const { id } = request.body as EventsDelete
+        const { id } = request.body as EventsId
 
         const deleteEvent = new DeleteEventsService();
         const eventDelete = await deleteEvent.execute({ id });
@@ -37,4 +45,4 @@ class DeleteEventsController{
     }
 }
 
-export { CreateEventsController, GetEventsController, DeleteEventsController}
+export { CreateEventsController, GetEventsController, DeleteEventsController, UpdateEventsController}

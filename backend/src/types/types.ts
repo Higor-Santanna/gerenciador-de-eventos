@@ -7,8 +7,14 @@ type EventsType = {
     status: boolean
 }
 
-type EventsDelete = {
+type EventsId = {
     id: string
 }
 
-export { EventsType, EventsDelete }
+type UserType = {
+    nameUser: string
+    email: string
+    password: string
+}
+
+export { EventsType, EventsId, UserType }

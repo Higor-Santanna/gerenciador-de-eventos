@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyPluginOptions, FastifyRequest, FastifyReply } from "fastify";
-import { CreateEventsController, GetEventsController, DeleteEventsController } from "./controllers/events-controller";
+import { CreateEventsController, GetEventsController, DeleteEventsController, UpdateEventsController} from "./controllers/events-controller";
 
 export async function routes(fastify: FastifyInstance, option: FastifyPluginOptions) {
     
@@ -11,7 +11,11 @@ export async function routes(fastify: FastifyInstance, option: FastifyPluginOpti
         return new CreateEventsController().handle(request, reply)
     });
 
-    fastify.delete("/events", async (request: FastifyRequest, reply: FastifyReply) => {
+    fastify.put("/events/:id", async (request: FastifyRequest, reply: FastifyReply) => {
+        return new UpdateEventsController().handle(request, reply);
+    });
+
+    fastify.delete("/events/:id", async (request: FastifyRequest, reply: FastifyReply) => {
         return new DeleteEventsController().handle(request, reply)
     });
 };

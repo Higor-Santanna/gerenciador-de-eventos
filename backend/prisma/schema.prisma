@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Events {
+model Eventes {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String
   description String
@@ -22,5 +22,14 @@ model Events {
   endTime String
   status Boolean
 
-  @@map("Events")
+  @@map("Eventes")
+}
+
+model Users {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  nameUser String
+  email String
+  password String
+
+  @@map("Users")
 }
