@@ -28,7 +28,7 @@ model Events {
 model Users {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   nameUser String
-  email String
+  email String @unique
   password String
 
   @@map("Users")
