@@ -24,7 +24,6 @@ const useLogin = () => {
             const { token } = response.data;
             localStorage.setItem("token", token);
 
-
             navigate("/home")
         } catch (error) {
             alert("Erro ao fazer login. Verifique suas credenciais.");

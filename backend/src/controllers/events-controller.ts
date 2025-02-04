@@ -14,10 +14,10 @@ class GetEventsController{
 
 class CreateEventsController{
     async handle(request: FastifyRequest, reply: FastifyReply){
-        const { name, description, startTime, endTime, numberOfDays, status } = request.body as EventsType
+        const { name, description, startTime, endTime, numberOfDays, local } = request.body as EventsType
 
         const eventsService = new CreateEventsService();
-        const events = await eventsService.execute({ name, description, startTime, endTime, numberOfDays, status } as EventsType);
+        const events = await eventsService.execute({ name, description, startTime, endTime, numberOfDays, local } as EventsType);
         reply.send(events)
     }
 }

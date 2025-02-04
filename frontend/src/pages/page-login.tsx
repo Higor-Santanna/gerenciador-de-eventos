@@ -1,4 +1,4 @@
-import { useLogin } from "../hooks/use-login"
+import { useLogin } from "../hooks/user-login"
 
 const PageLogin = () => {
     const { emailRef, passwordRef, handleSubmit } = useLogin();
@@ -17,7 +17,7 @@ const PageLogin = () => {
                 <input type="submit" value="Login"/>
             </form>
 
-            <a href="">Não possui conta! Faça a sua agora mesmo</a>
+            <a href="/cadastro">Não possui conta! Faça a sua agora mesmo</a>
         </>
     )
 }

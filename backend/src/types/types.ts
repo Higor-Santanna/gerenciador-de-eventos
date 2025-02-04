@@ -4,7 +4,7 @@ type EventsType = {
     numberOfDays: number
     startTime: string
     endTime: string
-    status: boolean
+    local: string
 }
 
 type EventsId = {

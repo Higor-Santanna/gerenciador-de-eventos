@@ -20,7 +20,7 @@ model Events {
   numberOfDays Int?
   startTime String
   endTime String
-  status Boolean
+  local String
 
   @@map("Events")
 }

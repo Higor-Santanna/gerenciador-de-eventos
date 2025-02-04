@@ -9,8 +9,8 @@ class GetEventsService{
 }
 
 class CreateEventsService{
-    async execute({name, description, startTime, endTime, numberOfDays}: EventsType){
-        if(!name || !description || !startTime || !endTime){
+    async execute({name, description, startTime, endTime, numberOfDays, local}: EventsType){
+        if(!name || !description || !startTime || !endTime || !local){
             throw new Error("Preencha todos os campos")
         };
 
@@ -21,7 +21,7 @@ class CreateEventsService{
                 numberOfDays: numberOfDays !== undefined ? Number(numberOfDays) : null,
                 startTime,
                 endTime,
-                status: true
+                local
             }
         });
         
