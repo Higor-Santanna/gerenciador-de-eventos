@@ -9,6 +9,20 @@ class GetUserService {
     }
 };
 
+class Userservice {
+    async execute(id: string){
+        const getUser = await prismaClient.users.findUnique({
+            where: { id }
+        });
+
+        if (!getUser) {
+            throw new Error("Usuário não encontrado");
+        }
+
+        return getUser;
+    }
+}
+
 class CreateUserService{
     async execute({nameUser, email, password}: UserType){
         if(!nameUser || !email || !password){
@@ -37,4 +51,4 @@ class CreateUserService{
     }
 }
 
-export { GetUserService, CreateUserService }
+export { GetUserService, CreateUserService, Userservice}

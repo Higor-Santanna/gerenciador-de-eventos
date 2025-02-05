@@ -1,20 +1,25 @@
-import { useRef, FormEvent } from "react";
+import { useRef, FormEvent, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../service/api";
+
+type UserProps = {
+    nameUser: string
+}
 
 const useLogin = () => {
     const emailRef = useRef<HTMLInputElement | null>(null);
     const passwordRef = useRef<HTMLInputElement | null>(null);
     const navigate = useNavigate();
+    const [user, setUser] = useState<UserProps | null>(null);
 
-    async function handleSubmit(event: FormEvent){
+    async function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
-        if(!emailRef.current?.value || !passwordRef.current?.value || !emailRef.current?.value.trim() || !passwordRef.current?.value.trim()) {
+        if (!emailRef.current?.value || !passwordRef.current?.value || !emailRef.current?.value.trim() || !passwordRef.current?.value.trim()) {
             alert("Email o senha incorretos, por favor digite novamente")
             return
         };
-        
+
         try {
             const response = await api.post("/login", {
                 email: emailRef.current?.value,
@@ -31,7 +36,35 @@ const useLogin = () => {
         }
     }
 
-    return { emailRef, passwordRef, handleSubmit };
+    async function loadUser() {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        // Recuperando o ID do usuário do token (aqui supondo que o ID esteja no payload do token, você pode decodificar ou já armazenar o ID)
+        const decodedToken = JSON.parse(atob(token.split('.')[1]));  // Decodificando token JWT (supondo que o token seja JWT)
+        const userId = decodedToken?.id; // Assumindo que o id do usuário está no payload do token
+
+        if (!userId) return;
+
+        try {
+            // Agora você passa o ID na URL da requisição
+            const response = await api.get(`/user/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            setUser(response.data);  // Armazenando o usuário completo
+        } catch (error) {
+            console.error("Erro ao carregar usuário:", error);
+        }
+    }
+
+    useEffect(() => {
+        loadUser();
+    }, []);
+
+    return { user, emailRef, passwordRef, handleSubmit };
 };
 
 export { useLogin };

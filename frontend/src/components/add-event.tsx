@@ -5,7 +5,7 @@ const AddEvent = () => {
 
     return(
         <>
-            <h1>Adicioando um novo evento</h1>
+            <h1>Adicionar um novo Evento</h1>
 
             <form onSubmit={handleAddEvent}>
                 <label>Nome:</label>
@@ -13,7 +13,7 @@ const AddEvent = () => {
                 <br></br>
 
                 <label>Descrição do Evento:</label>
-                <input type="text" placeholder="Digite a descrição do evento..." ref={descriptionRef}></input>
+                <textarea placeholder="Digite a descrição do evento..." ref={descriptionRef}></textarea>
                 <br></br>
                 <label>Número de dias do Evento:</label>
                 <input type="number" placeholder="Digite a quantidade de dias que ocorrerá o evento..." ref={numberOfDaysRef}></input>
@@ -28,7 +28,7 @@ const AddEvent = () => {
                 <br></br>
 
                 <label>Local do Evento:</label>
-                <input type="text" placeholder="Digite onde acontecerá o evento..." ref={localRef}></input>
+                <textarea  placeholder="Digite onde acontecerá o evento..." ref={localRef}></textarea>
                 <br></br>
                 <input type="submit" value="Adicionar Evento"/>
             </form>

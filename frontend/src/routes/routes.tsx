@@ -4,6 +4,7 @@ import { HomePage } from "../pages/home-page";
 import { PageUserRegistration } from "../pages/page-user-registration";
 import { SucessRegistration } from "../pages/sucess-registration";
 import { AddEventPage } from "../pages/add-event-page";
+import { UpdateEventPage } from "../pages/update-event-page";
 
 const AppRoutes = () => {
     return (
@@ -13,6 +14,7 @@ const AppRoutes = () => {
                 <Route path="/cadastro" element={<PageUserRegistration />}/>
                 <Route path="/cadastro-realizado" element={<SucessRegistration />}/>
                 <Route path="/home/adicionar-evento" element={<AddEventPage />}/>
+                <Route path="/home/atualizar-evento/:eventId" element={<UpdateEventPage />}/>
             </Routes>
     )
 };

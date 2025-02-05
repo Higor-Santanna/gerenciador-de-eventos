@@ -17,4 +17,8 @@ type UserType = {
     password: string
 }
 
-export { EventsType, EventsId, UserType }
+type UserID = {
+    id: string
+}
+
+export { EventsType, EventsId, UserType, UserID}

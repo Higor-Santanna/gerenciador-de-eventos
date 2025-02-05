@@ -37,16 +37,16 @@ const useGetEvents = () => {
         loadEvents()
     }, [])
 
-    return { loadEvents, allEvents }
+    return { loadEvents, allEvents, setAllEvents }
 };
 
 const useAddEvent = () => {
     const nameRef = useRef<HTMLInputElement | null>(null);
-    const descriptionRef = useRef<HTMLInputElement | null>(null);
+    const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
     const numberOfDaysRef = useRef<HTMLInputElement | null>(null);
     const startTimeRef = useRef<HTMLInputElement | null>(null);
     const endTimeRef = useRef<HTMLInputElement | null>(null);
-    const localRef = useRef<HTMLInputElement | null>(null);
+    const localRef = useRef<HTMLTextAreaElement | null>(null);
     const navigate = useNavigate();
 
     async function handleAddEvent(event: FormEvent){
@@ -127,4 +127,42 @@ const useAddEvent = () => {
     return { handleAddEvent, nameRef, descriptionRef, numberOfDaysRef, startTimeRef, endTimeRef, localRef }
 }
 
-export { useGetEvents, useAddEvent }
+const useUpdateEvent = () => {
+    async function handleUpdateEvent(eventId: string, updatedData: Partial<EventsProps>) {
+
+        try {
+            const response = await api.put(`/events/${eventId}`, updatedData, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            return response.data; // Retorna os dados atualizados
+        } catch (error) {
+            console.error("Erro ao atualizar evento:", error);
+            alert("Erro ao atualizar o evento. Tente novamente.");
+            return null;
+        }
+    }
+
+    return { handleUpdateEvent };
+};
+
+const useDeleteEvent = (setAllEvents: React.Dispatch<React.SetStateAction<EventsProps[]>>) => {
+    async function handleDeleteEvent(eventId: string) {
+
+        try {
+            await api.delete(`/events/${eventId}`,{
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            setAllEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
+        } catch (error) {
+            console.error("Erro ao atualizar evento:", error);
+            alert("Erro ao atualizar o evento. Tente novamente.");
+            return null;
+        }
+    }
+
+    return { handleDeleteEvent }
+}
+
+export { useGetEvents, useAddEvent, useUpdateEvent, useDeleteEvent }
