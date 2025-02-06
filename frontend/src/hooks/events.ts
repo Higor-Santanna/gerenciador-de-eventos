@@ -75,7 +75,7 @@ const useAddEvent = () => {
             return;
         };
 
-        if(!numberOfDaysRef.current?.value || !numberOfDaysRef.current?.value.trim()){
+        if(!numberOfDaysRef.current?.value || !numberOfDaysRef.current?.value.trim() || Number(numberOfDaysRef.current?.value) <= 0){
             alert("O número de dias digitado é inválido ou campo está vazio")
             return;
         };
@@ -128,14 +128,18 @@ const useAddEvent = () => {
 }
 
 const useUpdateEvent = () => {
+    const token = localStorage.getItem("token");
+
     async function handleUpdateEvent(eventId: string, updatedData: Partial<EventsProps>) {
 
         try {
             const response = await api.put(`/events/${eventId}`, updatedData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-
-            return response.data; // Retorna os dados atualizados
+        
+            console.log("Resposta da API:", response.data); // <-- Verificar resposta no console
+        
+            return response.data;
         } catch (error) {
             console.error("Erro ao atualizar evento:", error);
             alert("Erro ao atualizar o evento. Tente novamente.");

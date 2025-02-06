@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { UpdateEvent } from "../components/update-event";
 import { useGetEvents } from "../hooks/events";
+import { BackPage } from "../styles/utils-style";
 
 const UpdateEventPage = () => {
     const { eventId } = useParams<{ eventId: string }>(); // Obtém o eventId da URL
@@ -14,7 +15,9 @@ const UpdateEventPage = () => {
 
     return (
         <>
-            <h1>Página de Atualizar Evento</h1>
+            <BackPage>
+                <a href="/home"><i className="fa-solid fa-arrow-left"></i></a>
+            </BackPage>
             <UpdateEvent event={eventToUpdate} /> {/* Passa o evento para o componente de atualização */}
         </>
     );

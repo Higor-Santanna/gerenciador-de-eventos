@@ -30,11 +30,12 @@ class CreateEventsService{
 }
 
 class UpdateEventsService{
-    async execute({ id }: EventsId, data: Partial<EventsType>) {
+    async execute(id: string, data: Partial<EventsType>) {
         if (!id) {
             throw new Error("ID do evento é obrigatório");
         }
 
+        console.log("Verificando se o evento existe...");
         const eventExists = await prismaClient.events.findUnique({
             where: { id }
         });
@@ -43,10 +44,12 @@ class UpdateEventsService{
             throw new Error("Evento não encontrado");
         }
 
+        console.log("Atualizando evento...");
         const updatedEvent = await prismaClient.events.update({
             where: { id },
             data
         });
+        console.log("Evento atualizado com sucesso:", updatedEvent);
 
         return updatedEvent;
     }

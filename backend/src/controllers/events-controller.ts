@@ -24,13 +24,21 @@ class CreateEventsController{
 
 class UpdateEventsController{
     async handle(request: FastifyRequest, reply: FastifyReply) {
-        const { id } = request.params as EventsId;
-        const data = request.body as Partial<EventsType>;
+        try {
+            const { id } = request.params as EventsId;
+            const data = request.body as Partial<EventsType>;
 
-        const updateEventService = new UpdateEventsService();
-        const updatedEvent = await updateEventService.execute({id}, data);
+            console.log("Recebendo requisição para atualizar evento:", id);
+            console.log("Dados recebidos:", data);
 
-        reply.send(updatedEvent);
+            const updateEventService = new UpdateEventsService();
+            const updatedEvent = await updateEventService.execute(id, data);
+
+            return reply.send(updatedEvent);
+        } catch (error) {
+            console.error("Erro ao atualizar evento:", error);
+            return reply.status(500).send({ message: "Erro ao atualizar evento", error});
+        }
     }
 }
 
