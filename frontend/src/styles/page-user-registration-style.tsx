@@ -34,7 +34,6 @@ export const RegisterContainer = styled.div`
   }
 
   input {
-    all: unset;
     border: 1px solid #ccc;
     padding: 0.8rem;
     border-radius: 5px;
@@ -59,5 +58,25 @@ export const RegisterContainer = styled.div`
 
   input[type="submit"]:hover {
     background: #e64a19;
+  }
+
+  .password-container {
+    background-color: #FFFFFF;
+    position: relative; /* Necessário para posicionar os ícones dentro do campo */
+  }
+
+  .password-container input {
+      padding-right: 2.5rem; /* Espaço para os ícones */
+  }
+
+  .password-container i {
+      background-color: #FFFFFF;
+      position: absolute;
+      right: 0.8rem; /* Posiciona o ícone à direita dentro do campo */
+      top: 39%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #888; /* Cor dos ícones */
+      font-size: 1.2rem;
   }
 `;

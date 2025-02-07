@@ -7,8 +7,28 @@ export const LoginContainer = styled.div`
   justify-content: center;
   height: 100vh;
   background-color: #0F2A51;
-  
-  div {
+
+  a {
+    margin-top: 1rem;
+    color: #9cc4e4;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+    background-color: #0F2A51;
+    text-decoration: underline;
+    font-size: 0.9rem;
+
+    @media(max-width: 500px) {
+      text-align: center;
+    }
+  }
+
+  a:hover {
+    color: #e64a19;
+  }
+`;
+
+export const Div = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,26 +59,4 @@ export const LoginContainer = styled.div`
           font-size: 1.35rem;
         }
     }
-
-    
-  }
-
-  a {
-    margin-top: 1rem;
-    color: #9cc4e4;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s;
-    background-color: #0F2A51;
-    text-decoration: underline;
-    font-size: 0.9rem;
-
-    @media(max-width: 500px) {
-      text-align: center;
-    }
-  }
-
-  a:hover {
-    color: #e64a19;
-  }
 `;

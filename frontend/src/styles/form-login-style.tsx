@@ -1,46 +1,78 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export const FormContainer = styled.form`
-    display: flex;
-    flex-direction: column;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 400px;
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
 
-  label {
-    font-size: 1rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    color: #333;
+export const Label = styled.label`
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-align: left;
+  width: 100%;
+  background-color: #f4f4f4;
+`;
+
+export const Input = styled.input`
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  
+  &:focus {
+    border-color: #ff712f;
+    outline: none;
   }
 
-  input {
-    all: unset;
-    border: 1px solid #ccc;
-    padding: 0.8rem;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    width: 100%;
-    box-sizing: border-box;
+  &::placeholder {
+    color: #888;
   }
+`;
 
-  input:focus {
-    border-color: #ff5722;
+export const PasswordContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: #f4f4f4;
+`;
+
+export const Icon = styled.i`
+  margin: 0 0 10px -30px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #888;
+  background-color: #f4f4f4;
+
+  &:hover {
+    color: #ff712f;
   }
+`;
 
-  input[type="submit"] {
-    background: #ff5722;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-
-  input[type="submit"]:hover {
-    background: #e64a19;
+export const SubmitButton = styled.input`
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  background-color: #ff712f;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: #ff712f;
   }
 `;

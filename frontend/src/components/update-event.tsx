@@ -63,10 +63,10 @@ const UpdateEvent = ({ event }: EditEventProps) => {
                     <input type="number" name="numberOfDays" value={eventData.numberOfDays} onChange={handleChange} required />
 
                     <label>Horário de Início:</label>
-                    <input type="text" name="startTime" value={eventData.startTime} onChange={handleChange} required />
+                    <input type="time" name="startTime" value={eventData.startTime} onChange={handleChange} required />
 
                     <label>Horário Final:</label>
-                    <input type="text" name="endTime" value={eventData.endTime} onChange={handleChange} required />
+                    <input type="time" name="endTime" value={eventData.endTime} onChange={handleChange} required />
 
                     <label>Local do Evento:</label>
                     <textarea name="local" value={eventData.local} onChange={handleChange} required />

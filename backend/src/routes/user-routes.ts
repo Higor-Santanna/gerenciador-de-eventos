@@ -3,7 +3,7 @@ import { GetUserController, CreateUserController, UserController } from "../cont
 import { authMiddleware } from "../middleware/authMiddleware";
 
 const userRoutes  = async (fastify: FastifyInstance, option: FastifyPluginOptions) => {
-    fastify.get("/user", {preHandler: authMiddleware }, async (request: FastifyRequest, reply: FastifyReply) => {
+    fastify.get("/user", async (request: FastifyRequest, reply: FastifyReply) => {
         return new GetUserController().handle(request, reply)
     });
 

@@ -21,11 +21,11 @@ const AddEvent = () => {
                     <br></br>
 
                     <label>Horário de Início:</label>
-                    <input type="text" placeholder="Que horas que começa o evento..." ref={startTimeRef}></input>
+                    <input type="time" placeholder="Que horas que começa o evento..." ref={startTimeRef}></input>
                     <br></br>
 
                     <label>Horário Final:</label>
-                    <input type="text" placeholder="Que horas termina o evento" ref={endTimeRef}></input>
+                    <input type="time" placeholder="Que horas termina o evento" ref={endTimeRef}></input>
                     <br></br>
 
                     <label>Local do Evento:</label>
