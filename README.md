@@ -30,15 +30,15 @@ Cada evento possui um nome, descrição, quantidades de dias que ocorrerá, hor�
 <h2 id="images">📍 Funcionamento</h2>
 
 <p align="center">
-    <img src="./images/image1.png" alt="Print da página de Login" width="400px">
+    <img src="./images/image1.png" alt="Print da página de Login" width="600px">
 </p>
 
 <p align="center">
-    <img src="./images/image3.gif" alt="Gif do update" width="400px">
+    <img src="./images/image3.gif" alt="Gif do update" width="600px">
 </p>
 
 <p align="center">
-    <img src="./images/image2.gif" alt="Gif da adição e exclusão da tarefa" width="400px">
+    <img src="./images/image2.gif" alt="Gif da adição e exclusão da tarefa" width="600px">
 </p>
 
 <h2 id="started">🚀 Instalação</h2>
