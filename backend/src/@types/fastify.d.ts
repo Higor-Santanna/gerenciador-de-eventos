@@ -1,4 +1,4 @@
-import "@fastify/jwt";
+// import "@fastify/jwt";
 import { FastifyRequest } from "fastify";
 
 declare module "fastify" {
@@ -8,4 +8,4 @@ declare module "fastify" {
       email: string;
     };
   }
-}
+};

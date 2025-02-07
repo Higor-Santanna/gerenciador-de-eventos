@@ -6,7 +6,7 @@ import { HeaderContainer, WelcomeTitle, AddEventButton} from "../styles/homePage
 const HomePage = () => {
     const { handleLogout } = useLogout();
     const { user } = useLogin();
-
+    
     return(
         <>
             <HeaderContainer>

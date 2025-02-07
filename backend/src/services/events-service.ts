@@ -1,15 +1,38 @@
 import prismaClient from "../prisma";
-import { EventsType, EventsId} from "../types/types";
+import { EventsType, EventsId } from "../types/types";
+import { FastifyRequest } from "fastify";
+
+export interface AuthenticatedRequest extends FastifyRequest {
+    user: {
+        id: string;
+        email: string;
+    };
+}
 
 class GetEventsService{
     async execute(){
-        const getEvents = await prismaClient.events.findMany();
+        const getEvents = await prismaClient.events.findMany({
+            include: {
+                createdBy: {
+                    select: { nameUser: true }, // Inclui o nome do criador do evento
+                },
+            },
+        });
         return getEvents;
     }
 }
 
 class CreateEventsService{
-    async execute({name, description, startTime, endTime, numberOfDays, local}: EventsType){
+    async execute({name, description, startTime, endTime, numberOfDays, local}: EventsType, request: AuthenticatedRequest){
+
+        if (!request.user || !request.user.id) {
+            throw new Error("Usuário não autenticado");
+        }
+
+        const userId = request.user.id //PEGAO ID DO USUÁRIO
+
+        const numberOfDaysInt = Number(numberOfDays) || 0; //GARANTE QUE O BD RECEBE UM NÚMERO
+
         if(!name || !description || !startTime || !endTime || !local){
             throw new Error("Preencha todos os campos")
         };
@@ -18,11 +41,17 @@ class CreateEventsService{
             data: {
                 name,
                 description,
-                numberOfDays: numberOfDays !== undefined ? Number(numberOfDays) : null,
+                numberOfDays: numberOfDaysInt,
                 startTime,
                 endTime,
-                local
-            }
+                local,
+                createdById: userId,
+            },
+            include: {
+                createdBy: {
+                    select: { nameUser: true }, // Retorna o nome do criador
+                },
+            },
         });
         
         return event

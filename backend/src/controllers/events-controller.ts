@@ -1,6 +1,7 @@
 import { FastifyRequest,  FastifyReply } from "fastify";
 import { CreateEventsService, GetEventsService, DeleteEventsService, UpdateEventsService } from "../services/events-service";
 import { EventsType, EventsId } from "../types/types";
+import { AuthenticatedRequest } from "../services/events-service";
 
 class GetEventsController{
     async handle(request: FastifyRequest, reply: FastifyReply){
@@ -17,7 +18,9 @@ class CreateEventsController{
         const { name, description, startTime, endTime, numberOfDays, local } = request.body as EventsType
 
         const eventsService = new CreateEventsService();
-        const events = await eventsService.execute({ name, description, startTime, endTime, numberOfDays, local } as EventsType);
+        // const events = await eventsService.execute({ name, description, startTime, endTime, numberOfDays, local} as EventsType);
+
+        const events = await eventsService.execute({ name, description, startTime, endTime, numberOfDays, local } as EventsType, request as AuthenticatedRequest);
         reply.send(events)
     }
 }

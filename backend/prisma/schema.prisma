@@ -17,10 +17,12 @@ model Events {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String
   description String
-  numberOfDays Int?
+  numberOfDays Int
   startTime String
   endTime String
   local String
+  createdById String @db.ObjectId
+  createdBy Users @relation(fields: [createdById], references: [id])
 
   @@map("Events")
 }
@@ -32,4 +34,5 @@ model Users {
   password String
 
   @@map("Users")
+  Events Events[]
 }

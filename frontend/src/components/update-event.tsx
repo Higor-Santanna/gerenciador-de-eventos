@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useUpdateEvent } from "../hooks/events";
+import { useNavigate } from "react-router-dom";
 import { FormContainerAddUpdate } from "../styles/add-update-event-style";
 
 interface EditEventProps {
@@ -16,6 +17,7 @@ interface EditEventProps {
 
 const UpdateEvent = ({ event }: EditEventProps) => {
     const { handleUpdateEvent } = useUpdateEvent();
+    const navigate = useNavigate();
 
     const [eventData, setEventData] = useState({
         name: event.name,
@@ -38,13 +40,10 @@ const UpdateEvent = ({ event }: EditEventProps) => {
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        console.log("Enviando os seguintes dados:", eventData);
-
         const updatedEvent = await handleUpdateEvent(event.id, eventData);
 
         if (updatedEvent) {
-            console.log("Evento atualizado no frontend:", updatedEvent); 
-            alert("Evento atualizado com sucesso!");
+            navigate("/evento-atualizado")
         }
     }
 

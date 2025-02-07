@@ -1,6 +1,12 @@
 import { api } from "../service/api";
 import { useEffect, useState, useRef, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode, JwtPayload } from "jwt-decode";
+
+interface CustomJwtPayload extends JwtPayload {
+    id: string; // Definir 'id' como obrigatório
+    email: string;
+}
 
 interface EventsProps{
     id: string
@@ -10,32 +16,32 @@ interface EventsProps{
     startTime: string
     endTime: string
     local: string
+    createdBy?: {
+        nameUser: string;
+    };
 }
-
-const token = localStorage.getItem("token");
 
 const useGetEvents = () => {
     const [ allEvents, setAllEvents ] = useState<EventsProps[]>([]);
 
     async function loadEvents() {
-
+        const token = localStorage.getItem("token");
         try {
             const response = await api.get("/events", {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-
+            
             setAllEvents(response.data);
         } catch (error) {
             console.error("Erro ao carregar eventos:", error);
         }
-    };
-    
-    
+    }
+
     useEffect(() => {
-        loadEvents()
-    }, [])
+        loadEvents();
+    }, []);
 
     return { loadEvents, allEvents, setAllEvents }
 };
@@ -51,6 +57,18 @@ const useAddEvent = () => {
 
     async function handleAddEvent(event: FormEvent){
         event.preventDefault();
+        const token = localStorage.getItem("token"); 
+
+        if (!token) {
+            alert("Usuário não autenticado!");
+            throw new Error("Token não encontrado!");
+        }
+
+        // Forçando o tipo de 'decodedToken' para 'CustomJwtPayload'
+        const decodedToken = jwtDecode(token) as CustomJwtPayload;
+        console.log("Token decodificado", decodedToken)
+        const userId = decodedToken.id; // O TypeScript agora reconhece "id" no token. alteração
+
         const eventName = nameRef.current?.value || "";
 
         if(!nameRef.current?.value || !nameRef.current?.value.trim()){
@@ -108,7 +126,8 @@ const useAddEvent = () => {
                     numberOfDays: numberOfDaysRef.current?.value,
                     startTime: startTimeRef.current?.value,
                     endTime: endTimeRef.current?.value,
-                    local: localRef.current?.value
+                    local: localRef.current?.value,
+                    createdById: userId
                 },
                 {
                     headers: {
@@ -117,7 +136,7 @@ const useAddEvent = () => {
                 }
             );
 
-            navigate("/home")
+            navigate("/evento-criado")
         } catch (error) {
             alert("Erro ao adicionar o novo evento. Verifique suas credenciais.");
             console.error("Erro na adição do evento:", error);
@@ -136,9 +155,7 @@ const useUpdateEvent = () => {
             const response = await api.put(`/events/${eventId}`, updatedData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-        
-            console.log("Resposta da API:", response.data); // <-- Verificar resposta no console
-        
+            
             return response.data;
         } catch (error) {
             console.error("Erro ao atualizar evento:", error);
@@ -152,6 +169,7 @@ const useUpdateEvent = () => {
 
 const useDeleteEvent = (setAllEvents: React.Dispatch<React.SetStateAction<EventsProps[]>>) => {
     async function handleDeleteEvent(eventId: string) {
+        const token = localStorage.getItem("token");
 
         try {
             await api.delete(`/events/${eventId}`,{

@@ -18,22 +18,6 @@ export const EventListContainer = styled.div`
       transform: scale(1.02);
     }
   }
-  
-  li:nth-child(odd) {
-    background: #ececec;
-
-    h2{
-        background-color: #ececec;
-    }
-
-    p{
-        background-color: #ececec;
-    }
-
-    strong{
-        background-color: #ececec;
-    }
-  }
 
   li h2 {
     font-size: 1.3rem;
@@ -124,4 +108,19 @@ export const AnyEvents = styled.h3`
     margin-bottom: 2rem;
     text-align: center;
     font-weight: 800;
-`
+`;
+
+export const CreatorSpan = styled.span`
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #003985;
+  background-color: #ffffff;
+  border-radius: 5px;
+  margin-bottom: 0.3rem;
+
+  strong {
+    background-color: #ffffff;
+    color: #003985;
+  }
+`;

@@ -29,7 +29,7 @@ class LoginService {
             { expiresIn: "1h" }
         );
 
-        return { token, user }
+        return { token, user } //alteração
     }
 };
 
