@@ -1,6 +1,6 @@
 import prismaClient from "../prisma";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";//criptografar/verificar senhas.
+import jwt from "jsonwebtoken";//gera tokens
 import { UserType } from "../types/types";
 
 class LoginService {
@@ -24,12 +24,12 @@ class LoginService {
         };
 
         const token = jwt.sign(
-            { id: user.id, email: user.email },
-            process.env.JWT_SECRET as string,
+            { id: user.id, email: user.email }, //payload do token
+            process.env.JWT_SECRET as string, //chave secreta
             { expiresIn: "1h" }
         );
 
-        return { token, user } //alteração
+        return { token, user }
     }
 };
 

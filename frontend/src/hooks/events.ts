@@ -70,11 +70,7 @@ const useAddEvent = () => {
         const userId = decodedToken.id; // O TypeScript agora reconhece "id" no token. alteração
 
         const eventName = nameRef.current?.value || "";
-
-        if(!nameRef.current?.value || !nameRef.current?.value.trim()){
-            alert("O nome digitado é inválido ou campo está vazio")
-            return;
-        };
+        const eventDescription = descriptionRef.current?.value || "";
 
         const response = await api.get("/events", {
             headers: { Authorization: `Bearer ${token}` }
@@ -83,12 +79,14 @@ const useAddEvent = () => {
         const allEvents: EventsProps[] = response.data;
         const eventExists = allEvents.some(event => event.name.toLowerCase() === eventName.toLowerCase());
 
-        if(eventExists) {
-            alert("Já existe um evento com esse nome. Escolha outro nome.");
+        if(!nameRef.current?.value || !nameRef.current?.value.trim() || eventExists){
+            alert("O nome do evento já existe ou campo está vazio")
             return;
-        }
+        };
 
-        if(!descriptionRef.current?.value || !descriptionRef.current?.value.trim()){
+        const descriptionExists = allEvents.some(event => event.description.toLowerCase() === eventDescription.toLowerCase());
+
+        if(!descriptionRef.current?.value || !descriptionRef.current?.value.trim() || descriptionExists){
             alert("A descrição digitada é inválido ou campo está vazio")
             return;
         };
@@ -151,7 +149,35 @@ const useUpdateEvent = () => {
 
     async function handleUpdateEvent(eventId: string, updatedData: Partial<EventsProps>) {
 
+        if(!updatedData.numberOfDays || Number(updatedData.numberOfDays) <= 0){
+            alert("O número de dias digitado é inválido ou campo está vazio")
+            return;
+        };
+
         try {
+            const responseGet = await api.get("/events", {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            const allEvents: EventsProps[] = responseGet.data;
+
+            // Verifica se já existe um evento com o mesmo nome (excluindo o evento que está sendo atualizado)
+            const eventExists = allEvents.some(event => 
+                event.id !== eventId && event.name.toLowerCase() === updatedData.name!.toLowerCase()
+            );
+
+            if (eventExists) {
+                alert("Já existe um evento com esse nome. Escolha outro nome.");
+                return;
+            };
+
+            const descriptionExists = allEvents.some(event => event.id !== eventId && event.description.toLowerCase() === updatedData.description!.toLowerCase());
+
+            if (descriptionExists) {
+                alert("Já existe um evento com essa descrição. Escolha outra descrição.");
+                return;
+            };
+            
             const response = await api.put(`/events/${eventId}`, updatedData, {
                 headers: { Authorization: `Bearer ${token}` }
             });

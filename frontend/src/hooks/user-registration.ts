@@ -14,21 +14,24 @@ const useUserRegistration = () => {
     const emailRef = useRef<HTMLInputElement | null>(null);
     const passwordRef = useRef<HTMLInputElement | null>(null);
     const navigate = useNavigate();
-    const regexName = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)*$/
-    const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$/
+    const regexName = /^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/;
+    const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$/;
 
     async function handleRegistration(event: FormEvent) {
         event.preventDefault();
 
-        if (!nameRef.current?.value || !nameRef.current?.value.trim() || !regexName) {
-            alert("O nome digitado é inválido.")
-            return;
-        };
+        const name = nameRef.current?.value || "";
+        const email = emailRef.current?.value || "";
 
-        if (!emailRef.current?.value || !emailRef.current?.value.trim() || !regexEmail) {
-            alert("O email informado é inválido")
+        if (!regexName.test(name)) {
+            alert("O nome digitado é inválido. Certifique-se de incluir pelo menos uma letra maiúscula e uma minúscula, sem números ou caracteres especiais.");
             return;
-        };
+        }
+
+        if (!regexEmail.test(email)) {
+            alert("O email informado é inválido. Certifique-se de inserir um email válido, como exemplo@gmail.com.");
+            return;
+        }
 
         if (!passwordRef.current?.value || !passwordRef.current?.value.trim()) {
             alert("A senha informada é inválida")
@@ -46,7 +49,7 @@ const useUserRegistration = () => {
                 alert("O email informado já está sendo utilizado.");
                 return;
             }
-            
+
             await api.post("/user", {
                 nameUser: nameRef.current?.value,
                 email: emailRef.current?.value,

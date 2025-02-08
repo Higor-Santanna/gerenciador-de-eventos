@@ -1,10 +1,10 @@
 import Fastify from "fastify";
-import cors from "@fastify/cors";
+import cors from "@fastify/cors"; //plugin @fastify/cors para permitir requisições de diferentes origens
 import dotenv from "dotenv";
 import { registerRoutes } from "./routes/index";
 
 dotenv.config()
-const app = Fastify({ logger: true })
+const app = Fastify({ logger: true })//Cria a aplicação Fastify.
 
 const start = async () => {
 

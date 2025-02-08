@@ -16,7 +16,7 @@ interface EditEventProps {
 }
 
 const UpdateEvent = ({ event }: EditEventProps) => {
-    const { handleUpdateEvent } = useUpdateEvent();
+    const { handleUpdateEvent } = useUpdateEvent(); //hook personalizado
     const navigate = useNavigate();
 
     const [eventData, setEventData] = useState({
@@ -29,18 +29,18 @@ const UpdateEvent = ({ event }: EditEventProps) => {
     });
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        const { name, value } = e.target;
+        const { name, value } = e.target; //name: Nome do campo (input ou textarea), value: Novo valor digitado pelo usuário.
 
         setEventData({
             ...eventData,
             [name]: name === "numberOfDays" ? Number(value) : value, // Converte para número se for numberOfDays
-        });
+        }); //essa função atualiza apenas os dados que foram atualizados
     }
 
     async function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
+        e.preventDefault();//evita atualizar o form
 
-        const updatedEvent = await handleUpdateEvent(event.id, eventData);
+        const updatedEvent = await handleUpdateEvent(event.id, eventData);//envia para bd os dados atualizados
 
         if (updatedEvent) {
             navigate("/evento-atualizado")

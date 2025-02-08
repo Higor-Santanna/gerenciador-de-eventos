@@ -5,11 +5,11 @@ import { AuthenticatedRequest } from "../services/events-service";
 
 class GetEventsController{
     async handle(request: FastifyRequest, reply: FastifyReply){
-        const getEventService = new GetEventsService();
+        const getEventService = new GetEventsService();//instancia
 
-        const getEvents = await getEventService.execute();
+        const getEvents = await getEventService.execute();//busca
 
-        reply.send(getEvents);
+        reply.send(getEvents);//retorna
     }
 }
 
@@ -18,7 +18,6 @@ class CreateEventsController{
         const { name, description, startTime, endTime, numberOfDays, local } = request.body as EventsType
 
         const eventsService = new CreateEventsService();
-        // const events = await eventsService.execute({ name, description, startTime, endTime, numberOfDays, local} as EventsType);
 
         const events = await eventsService.execute({ name, description, startTime, endTime, numberOfDays, local } as EventsType, request as AuthenticatedRequest);
         reply.send(events)
@@ -30,9 +29,6 @@ class UpdateEventsController{
         try {
             const { id } = request.params as EventsId;
             const data = request.body as Partial<EventsType>;
-
-            console.log("Recebendo requisição para atualizar evento:", id);
-            console.log("Dados recebidos:", data);
 
             const updateEventService = new UpdateEventsService();
             const updatedEvent = await updateEventService.execute(id, data);

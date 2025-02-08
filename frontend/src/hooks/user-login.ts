@@ -7,7 +7,7 @@ type UserProps = {
 }
 
 const useLogin = () => {
-    const emailRef = useRef<HTMLInputElement | null>(null);
+    const emailRef = useRef<HTMLInputElement | null>(null);//referência para o email
     const passwordRef = useRef<HTMLInputElement | null>(null);
     const navigate = useNavigate();
     const [user, setUser] = useState<UserProps | null>(null);
@@ -26,7 +26,7 @@ const useLogin = () => {
                 password: passwordRef.current?.value
             });
 
-            const { token } = response.data;
+            const { token } = response.data;//extrai o token
             localStorage.setItem("token", token);
 
             navigate("/home")
@@ -36,13 +36,14 @@ const useLogin = () => {
         }
     }
 
+    //Função que carrega dados do usuário
     async function loadUser() {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        // Recuperando o ID do usuário do token (aqui supondo que o ID esteja no payload do token, você pode decodificar ou já armazenar o ID)
-        const decodedToken = JSON.parse(atob(token.split('.')[1]));  // Decodificando token JWT (supondo que o token seja JWT)
-        const userId = decodedToken?.id; // Assumindo que o id do usuário está no payload do token
+        // Recuperando o ID do usuário do token 
+        const decodedToken = JSON.parse(atob(token.split('.')[1]));  // Decodificando token JWT
+        const userId = decodedToken?.id; // Amarzena o ID do usuário
 
         if (!userId) return;
 

@@ -2,6 +2,7 @@ import prismaClient from "../prisma";
 import { EventsType, EventsId } from "../types/types";
 import { FastifyRequest } from "fastify";
 
+// tipo personalizado para requisições autenticadas
 export interface AuthenticatedRequest extends FastifyRequest {
     user: {
         id: string;
@@ -64,7 +65,6 @@ class UpdateEventsService{
             throw new Error("ID do evento é obrigatório");
         }
 
-        console.log("Verificando se o evento existe...");
         const eventExists = await prismaClient.events.findUnique({
             where: { id }
         });
@@ -73,12 +73,10 @@ class UpdateEventsService{
             throw new Error("Evento não encontrado");
         }
 
-        console.log("Atualizando evento...");
         const updatedEvent = await prismaClient.events.update({
             where: { id },
             data
         });
-        console.log("Evento atualizado com sucesso:", updatedEvent);
 
         return updatedEvent;
     }
